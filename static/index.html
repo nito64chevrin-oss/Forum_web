@@ -3,512 +3,346 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Araki Forum</title>
+    <title>Forum Araki - L'univers de Hirohiko Araki</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <!-- Overlay flash JoJo (transition de thème) -->
-    <div class="jojo-flash" id="jojoFlash" aria-hidden="true"></div>
-
-    <!-- Étoile Joestar en fond (très subtile, rotation lente) -->
-    <div class="star-bg" aria-hidden="true">
-        <svg class="star-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="100,10 120,75 190,75 135,115 155,180 100,140 45,180 65,115 10,75 80,75"/>
+    <!-- Rotating Star Background (JoJo Birthmark) -->
+    <div class="star-background">
+        <svg class="jojo-star" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50,15 L58,42 L85,42 L63,58 L71,85 L50,69 L29,85 L37,58 L15,42 L42,42 Z" fill="currentColor"/>
         </svg>
     </div>
-    
-    <header class="header">
-        <div class="container header-inner">
-            <a href="/" class="logo">
-                <span class="logo-star">★</span>
-                <span class="logo-text">ARAKI</span>
-                <span class="logo-sub">FORUM</span>
-            </a>
-            <div class="header-actions">
-                <button class="theme-toggle" id="themeToggle" aria-label="Changer le thème">
-                    <span class="theme-icon">☀️</span>
+
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+        <div class="top-nav-content">
+            <div class="logo-section">
+                <div class="logo">
+                    <span class="logo-icon">⭐</span>
+                    <span class="logo-text">ARAKI</span>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="#" class="nav-link">ACCUEIL</a>
+                <a href="#" class="nav-link">MANGA</a>
+                <a href="#" class="nav-link">ANIME</a>
+                <a href="#" class="nav-link">ARTISTE</a>
+                <a href="#" class="nav-link">COMMUNAUTÉ</a>
+            </nav>
+            <div class="user-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+                    <span class="theme-icon">🌙</span>
                 </button>
-                <a href="/login" class="btn btn-outline">Connexion</a>
-                <a href="/register" class="btn btn-primary">Inscription</a>
+                <button class="btn-connect">Se connecter</button>
+                <button class="btn-search" aria-label="Rechercher">🔍</button>
+                <button class="btn-menu" aria-label="Menu">☰</button>
             </div>
         </div>
     </header>
 
-    <nav class="navbar">
-        <div class="container nav-inner">
-
-            <!-- JoJo Manga -->
-            <div class="nav-item">
-                <a href="#" class="nav-link">
-                    JoJo Manga <span class="nav-arrow">▾</span>
-                </a>
-                <div class="dropdown dropdown-wide">
-                    <div class="dropdown-col">
-                        <span class="dropdown-heading">Par Partie</span>
-                        <a href="/manga/part1" class="dropdown-link">Part 1 — Phantom Blood</a>
-                        <a href="/manga/part2" class="dropdown-link">Part 2 — Battle Tendency</a>
-                        <a href="/manga/part3" class="dropdown-link">Part 3 — Stardust Crusaders</a>
-                        <a href="/manga/part4" class="dropdown-link">Part 4 — Diamond is Unbreakable</a>
-                        <a href="/manga/part5" class="dropdown-link">Part 5 — Golden Wind</a>
-                        <a href="/manga/part6" class="dropdown-link">Part 6 — Stone Ocean</a>
-                        <a href="/manga/part7" class="dropdown-link">Part 7 — Steel Ball Run</a>
-                        <a href="/manga/part8" class="dropdown-link">Part 8 — JoJolion</a>
-                        <a href="/manga/part9" class="dropdown-link">Part 9 — The JOJOLands</a>
-                    </div>
-                    <div class="dropdown-col">
-                        <span class="dropdown-heading">Thèmes</span>
-                        <a href="/manga/stands" class="dropdown-link">⚡ Stands &amp; Pouvoirs</a>
-                        <a href="/manga/characters" class="dropdown-link">👤 Personnages</a>
-                        <a href="/manga/theories" class="dropdown-link">🔍 Théories</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- JoJo Anime -->
-            <div class="nav-item">
-                <a href="#" class="nav-link">
-                    JoJo Anime <span class="nav-arrow">▾</span>
-                </a>
-                <div class="dropdown dropdown-wide">
-                    <div class="dropdown-col">
-                        <span class="dropdown-heading">Par Saison</span>
-                        <a href="/anime/s1" class="dropdown-link">Part 1 &amp; 2 (2012)</a>
-                        <a href="/anime/s2" class="dropdown-link">Part 3 (2014–2015)</a>
-                        <a href="/anime/s3" class="dropdown-link">Part 4 (2016)</a>
-                        <a href="/anime/s4" class="dropdown-link">Part 5 (2018–2019)</a>
-                        <a href="/anime/s5" class="dropdown-link">Part 6 (2021–2023)</a>
-                    </div>
-                    <div class="dropdown-col">
-                        <span class="dropdown-heading">Contenu</span>
-                        <a href="/anime/ost" class="dropdown-link">🎵 OST &amp; Musique</a>
-                        <a href="/anime/compare" class="dropdown-link">🔄 Comparaisons Manga/Anime</a>
-                        <a href="/anime/ova" class="dropdown-link">🎬 OVA</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Autres Œuvres -->
-            <div class="nav-item">
-                <a href="#" class="nav-link">
-                    Autres Œuvres <span class="nav-arrow">▾</span>
-                </a>
-                <div class="dropdown">
-                    <div class="dropdown-col">
-                        <a href="/works/baoh" class="dropdown-link">Baoh</a>
-                        <a href="/works/rohan" class="dropdown-link">Rohan Kishibe</a>
-                        <a href="/works/gorgeous" class="dropdown-link">Gorgeous Irene</a>
-                        <a href="/works/oneshots" class="dropdown-link">One-shots</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- L'artiste -->
-            <div class="nav-item">
-                <a href="#" class="nav-link">
-                    L'artiste <span class="nav-arrow">▾</span>
-                </a>
-                <div class="dropdown">
-                    <div class="dropdown-col">
-                        <a href="/artist/bio" class="dropdown-link">Biographie</a>
-                        <a href="/artist/interviews" class="dropdown-link">Interviews</a>
-                        <a href="/artist/expo" class="dropdown-link">Expositions</a>
-                        <a href="/artist/style" class="dropdown-link">Style artistique</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Communauté -->
-            <div class="nav-item">
-                <a href="#" class="nav-link">
-                    Communauté <span class="nav-arrow">▾</span>
-                </a>
-                <div class="dropdown">
-                    <div class="dropdown-col">
-                        <a href="/community/fanart" class="dropdown-link">🎨 Fan Art</a>
-                        <a href="/community/cosplay" class="dropdown-link">🎭 Cosplay</a>
-                        <a href="/community/memes" class="dropdown-link">😂 Memes</a>
-                        <a href="/community/events" class="dropdown-link">📅 Événements</a>
-                    </div>
-                </div>
-            </div>
-
+    <!-- Forum Header -->
+    <div class="forum-header">
+        <div class="forum-header-content">
+            <h1 class="forum-title">
+                <span class="forum-icon">💬</span>
+                FORUM
+            </h1>
         </div>
-    </nav>
+    </div>
 
-    <!-- ===========================
-         CONTENU PRINCIPAL
-         =========================== -->
-    <main class="main">
-        <div class="container">
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar + Content -->
+        <div class="forum-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <button class="categories-toggle" id="categoriesToggle">
+                    catégories
+                </button>
+            </aside>
 
-            <!-- ===== CATÉGORIES EN LIGNE =====
-                 Go template : {{range .Categories}}
-                 Chaque .category-card est généré dynamiquement depuis la DB
-            -->
-            <section class="section">
-                <h2 class="section-title">Catégories</h2>
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab active">Catégories</button>
+                    <button class="tab">Récents</button>
+                    <button class="tab">Top</button>
+                </div>
+
+                <!-- Categories Header -->
+                <div class="categories-header">
+                    <div class="header-left">Catégorie</div>
+                    <div class="header-right">
+                        <span>Sujets</span>
+                        <span>Récents</span>
+                    </div>
+                </div>
+
+                <!-- Categories List -->
                 <div class="categories-list">
-
-                    <!-- Catégorie 1 -->
-                    <div class="category-card" style="--cat-color: #4A5A9E;">
+                    <!-- Category 1: JoJo Manga -->
+                    <article class="category-item" data-category="manga">
+                        <div class="category-accent"></div>
                         <div class="category-main">
-                            <span class="category-icon">📚</span>
-                            <div class="category-body">
-                                <h3 class="category-name">JoJo Manga</h3>
-                                <p class="category-desc">Toutes les parties du manga original d'Araki</p>
-                                <div class="category-stats">
-                                    <span>142 topics</span>
-                                    <span class="stat-sep">·</span>
-                                    <span>891 messages</span>
+                            <div class="category-content">
+                                <div class="category-image">
+                                    <img src="images/part1.jpg" alt="JoJo Manga">
+                                </div>
+                                <div class="category-info">
+                                    <h2 class="category-title">
+                                        JoJo's Bizarre Adventure - Manga
+                                    </h2>
+                                    <p class="category-description">
+                                        Discussions sur toutes les parties du manga, analyses de chapitres, théories sur les Stands et les personnages. De Phantom Blood à The JOJOLands.
+                                    </p>
+                                    <div class="category-tags">
+                                        <span class="tag tag-blue">Stands & Pouvoirs</span>
+                                        <span class="tag tag-violet">Personnages</span>
+                                        <span class="tag tag-pink">Théories</span>
+                                        <span class="tag tag-cyan">Chapitres</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="category-stats">
+                                <div class="stats-count">
+                                    <span class="count-number">1.2k</span>
+                                    <span class="count-label">/mois</span>
+                                </div>
+                                <div class="recent-topics">
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-icon">📌</span>
+                                        <span class="topic-title">Stone Ocean - Analyse du Stand de Jolyne</span>
+                                        <span class="topic-time">6 min</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">Steel Ball Run : meilleure partie de JoJo ?</span>
+                                        <span class="topic-time">1 h</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">The JOJOLands chapitre 20 - Discussions</span>
+                                        <span class="topic-time">2 h</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">Stands les plus créatifs de la série</span>
+                                        <span class="topic-time">5 h</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <!-- Sous-catégories (déroulantes au hover) -->
-                        <!-- Go template : {{range .SubCategories}} -->
-                        <div class="category-subcats">
-                            <a href="/manga/part1" class="subcat-link">Part 1</a>
-                            <a href="/manga/part2" class="subcat-link">Part 2</a>
-                            <a href="/manga/part7" class="subcat-link">Part 7</a>
-                            <a href="/manga/stands" class="subcat-link">Stands</a>
-                            <a href="/manga/theories" class="subcat-link">Théories</a>
-                        </div>
-                        <!-- {{end}} -->
-                    </div>
+                    </article>
 
-                    <!-- Catégorie 2 -->
-                    <div class="category-card" style="--cat-color: #6A5A9E;">
+                    <!-- Category 2: JoJo Anime -->
+                    <article class="category-item" data-category="anime">
+                        <div class="category-accent"></div>
                         <div class="category-main">
-                            <span class="category-icon">🎬</span>
-                            <div class="category-body">
-                                <h3 class="category-name">JoJo Anime</h3>
-                                <p class="category-desc">Adaptations animées, OST et comparaisons</p>
-                                <div class="category-stats">
-                                    <span>98 topics</span>
-                                    <span class="stat-sep">·</span>
-                                    <span>624 messages</span>
+                            <div class="category-content">
+                                <div class="category-image">
+                                    <img src="images/Anime.jpg" alt="JoJo Anime">
+                                </div>
+                                <div class="category-info">
+                                    <h2 class="category-title">
+                                        JoJo's Bizarre Adventure - Anime
+                                    </h2>
+                                    <p class="category-description">
+                                        Adaptations animées, comparaisons manga/anime, OST iconiques, moments marquants. De David Production aux OVA des années 90.
+                                    </p>
+                                    <div class="category-tags">
+                                        <span class="tag tag-cyan">OST & Musique</span>
+                                        <span class="tag tag-blue">Saisons</span>
+                                        <span class="tag tag-violet">Comparaisons</span>
+                                        <span class="tag tag-pink">OVA</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="category-stats">
+                                <div class="stats-count">
+                                    <span class="count-number">890</span>
+                                    <span class="count-label">/mois</span>
+                                </div>
+                                <div class="recent-topics">
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-icon">📌</span>
+                                        <span class="topic-title">Stone Ocean Netflix - Avis sur la fin</span>
+                                        <span class="topic-time">12 min</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">OST Part 5 vs OST Part 3 : votre préféré ?</span>
+                                        <span class="topic-time">20 min</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">OVA Stardust Crusaders - Nostalgie</span>
+                                        <span class="topic-time">1 h</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">Quand l'adaptation Part 7 ?</span>
+                                        <span class="topic-time">3 h</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="category-subcats">
-                            <a href="/anime/s1" class="subcat-link">Part 1 &amp; 2</a>
-                            <a href="/anime/s3" class="subcat-link">Part 4</a>
-                            <a href="/anime/s4" class="subcat-link">Part 5</a>
-                            <a href="/anime/s5" class="subcat-link">Part 6</a>
-                            <a href="/anime/ost" class="subcat-link">OST</a>
-                        </div>
-                    </div>
+                    </article>
 
-                    <!-- Catégorie 3 -->
-                    <div class="category-card" style="--cat-color: #5BA8B8;">
+                    <!-- Category 3: Autres œuvres -->
+                    <article class="category-item" data-category="autres">
+                        <div class="category-accent"></div>
                         <div class="category-main">
-                            <span class="category-icon">📖</span>
-                            <div class="category-body">
-                                <h3 class="category-name">Autres Œuvres</h3>
-                                <p class="category-desc">Baoh, Rohan Kishibe, Gorgeous Irene...</p>
-                                <div class="category-stats">
-                                    <span>34 topics</span>
-                                    <span class="stat-sep">·</span>
-                                    <span>189 messages</span>
+                            <div class="category-content">
+                                <div class="category-image">
+                                    <img src="images/Baoh.jpg" alt="Autres œuvres">
+                                </div>
+                                <div class="category-info">
+                                    <h2 class="category-title">
+                                        Autres œuvres d'Araki
+                                    </h2>
+                                    <p class="category-description">
+                                        Baoh, Rohan Kishibe, Gorgeous Irene, Thus Spoke Kishibe Rohan et tous les one-shots. L'univers d'Araki au-delà de JoJo.
+                                    </p>
+                                    <div class="category-tags">
+                                        <span class="tag tag-violet">Rohan Kishibe</span>
+                                        <span class="tag tag-pink">Baoh</span>
+                                        <span class="tag tag-blue">One-shots</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="category-stats">
+                                <div class="stats-count">
+                                    <span class="count-number">456</span>
+                                    <span class="count-label">/mois</span>
+                                </div>
+                                <div class="recent-topics">
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-icon">📌</span>
+                                        <span class="topic-title">Rohan au Louvre - Exposition magistrale</span>
+                                        <span class="topic-time">24 min</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">Baoh mérite plus de reconnaissance</span>
+                                        <span class="topic-time">2 h</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">Thus Spoke Rohan - Meilleurs épisodes</span>
+                                        <span class="topic-time">6 h</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">Gorgeous Irene - Rareté et valeur</span>
+                                        <span class="topic-time">1 jour</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="category-subcats">
-                            <a href="/works/baoh" class="subcat-link">Baoh</a>
-                            <a href="/works/rohan" class="subcat-link">Rohan</a>
-                            <a href="/works/gorgeous" class="subcat-link">Gorgeous Irene</a>
-                            <a href="/works/oneshots" class="subcat-link">One-shots</a>
-                        </div>
-                    </div>
+                    </article>
 
-                    <!-- Catégorie 4 -->
-                    <div class="category-card" style="--cat-color: #C85A88;">
+                    <!-- Category 4: L'artiste -->
+                    <article class="category-item" data-category="artiste">
+                        <div class="category-accent"></div>
                         <div class="category-main">
-                            <span class="category-icon">✍️</span>
-                            <div class="category-body">
-                                <h3 class="category-name">L'artiste</h3>
-                                <p class="category-desc">Hirohiko Araki — sa vie, son style, ses expositions</p>
-                                <div class="category-stats">
-                                    <span>27 topics</span>
-                                    <span class="stat-sep">·</span>
-                                    <span>143 messages</span>
+                            <div class="category-content">
+                                <div class="category-image">
+                                    <img src="images/Araki.png" alt="Hirohiko Araki">
+                                </div>
+                                <div class="category-info">
+                                    <h2 class="category-title">
+                                        Hirohiko Araki - L'artiste
+                                    </h2>
+                                    <p class="category-description">
+                                        Biographie, interviews, expositions, évolution artistique. Discussions sur le style unique et l'influence d'Araki dans le monde du manga.
+                                    </p>
+                                    <div class="category-tags">
+                                        <span class="tag tag-pink">Biographie</span>
+                                        <span class="tag tag-violet">Interviews</span>
+                                        <span class="tag tag-cyan">Expositions</span>
+                                        <span class="tag tag-blue">Style</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="category-stats">
+                                <div class="stats-count">
+                                    <span class="count-number">234</span>
+                                    <span class="count-label">/mois</span>
+                                </div>
+                                <div class="recent-topics">
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-icon">📌</span>
+                                        <span class="topic-title">Le secret de la jeunesse éternelle d'Araki</span>
+                                        <span class="topic-time">15 min</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">Interview 2024 - Nouvelles révélations</span>
+                                        <span class="topic-time">1 h</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">Influences artistiques : mode et peinture</span>
+                                        <span class="topic-time">4 h</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">Évolution du style (1987-2024)</span>
+                                        <span class="topic-time">11 h</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="category-subcats">
-                            <a href="/artist/bio" class="subcat-link">Biographie</a>
-                            <a href="/artist/interviews" class="subcat-link">Interviews</a>
-                            <a href="/artist/expo" class="subcat-link">Expositions</a>
-                            <a href="/artist/style" class="subcat-link">Style</a>
-                        </div>
-                    </div>
+                    </article>
 
-                    <!-- Catégorie 5 -->
-                    <div class="category-card" style="--cat-color: #8A7ABE;">
+                    <!-- Category 5: Communauté -->
+                    <article class="category-item" data-category="communaute">
+                        <div class="category-accent"></div>
                         <div class="category-main">
-                            <span class="category-icon">🌟</span>
-                            <div class="category-body">
-                                <h3 class="category-name">Communauté</h3>
-                                <p class="category-desc">Fan Art, Cosplay, Memes, Événements</p>
-                                <div class="category-stats">
-                                    <span>215 topics</span>
-                                    <span class="stat-sep">·</span>
-                                    <span>1 247 messages</span>
+                            <div class="category-content">
+                                <div class="category-image">
+                                    <img src="images/community.png" alt="Communauté">
+                                </div>
+                                <div class="category-info">
+                                    <h2 class="category-title">
+                                        Communauté & Créations
+                                    </h2>
+                                    <p class="category-description">
+                                        Fan art, cosplay, memes, événements. Partagez vos créations et votre passion pour l'univers d'Araki avec la communauté.
+                                    </p>
+                                    <div class="category-tags">
+                                        <span class="tag tag-cyan">Fan Art</span>
+                                        <span class="tag tag-pink">Cosplay</span>
+                                        <span class="tag tag-violet">Memes</span>
+                                        <span class="tag tag-blue">Événements</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="category-stats">
+                                <div class="stats-count">
+                                    <span class="count-number">2.1k</span>
+                                    <span class="count-label">/mois</span>
+                                </div>
+                                <div class="recent-topics">
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-icon">📌</span>
+                                        <span class="topic-title">[Fan Art] Ma version de Jolyne Cujoh</span>
+                                        <span class="topic-time">3 min</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">Cosplay Giorno à Japan Expo 2024</span>
+                                        <span class="topic-time">30 min</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">Memes JoJo - Édition Part 6</span>
+                                        <span class="topic-time">2 h</span>
+                                    </a>
+                                    <a href="#" class="topic-link">
+                                        <span class="topic-title">Convention JoJo Paris - Qui vient ?</span>
+                                        <span class="topic-time">8 h</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="category-subcats">
-                            <a href="/community/fanart" class="subcat-link">Fan Art</a>
-                            <a href="/community/cosplay" class="subcat-link">Cosplay</a>
-                            <a href="/community/memes" class="subcat-link">Memes</a>
-                            <a href="/community/events" class="subcat-link">Événements</a>
-                        </div>
-                    </div>
-
+                    </article>
                 </div>
-                <!-- {{end}} fin boucle catégories -->
-            </section>
-
-            <!-- ===== DISCUSSIONS RÉCENTES =====
-                 Go template : {{range .Posts}}
-            -->
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">Discussions Récentes</h2>
-                    <a href="/posts/new" class="btn btn-primary btn-sm">+ Nouveau post</a>
-                </div>
-                <div class="posts-list">
-
-                    <!-- Post 1 -->
-                    <article class="post-card">
-                        <div class="post-accent" style="background: #4A5A9E;"></div>
-                        <div class="post-content">
-                            <div class="post-meta-top">
-                                <div class="post-tags">
-                                    <!-- Go template : {{range .Tags}} -->
-                                    <span class="tag" style="--tag-color: #5BA8B8;">HOT</span>
-                                    <span class="tag" style="--tag-color: #C85A88;">Théories</span>
-                                    <!-- {{end}} -->
-                                </div>
-                                <span class="post-category">JoJo Manga › Part 7</span>
-                            </div>
-                            <h3 class="post-title">
-                                <a href="/post/1">La connexion entre Steel Ball Run et les Parties précédentes — Analyse complète</a>
-                            </h3>
-                            <p class="post-excerpt">
-                                Après avoir relu SBR pour la 4ème fois, j'ai remarqué des détails que beaucoup ont manqués concernant les Corpse Parts et leur relation avec les Stands de l'univers original...
-                            </p>
-                            <div class="post-footer">
-                                <div class="post-author">
-                                    <div class="avatar" style="background: #4A5A9E;">G</div>
-                                    <span class="author-name">Giorno_Fan</span>
-                                    <span class="post-date">il y a 2h</span>
-                                </div>
-                                <div class="post-stats">
-                                    <span>💬 34</span>
-                                    <span>👁 891</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Post 2 -->
-                    <article class="post-card">
-                        <div class="post-accent" style="background: #C85A88;"></div>
-                        <div class="post-content">
-                            <div class="post-meta-top">
-                                <div class="post-tags">
-                                    <span class="tag" style="--tag-color: #6A5A9E;">Discussion</span>
-                                    <span class="tag" style="--tag-color: #4A5A9E;">Anime</span>
-                                </div>
-                                <span class="post-category">JoJo Anime › Part 6</span>
-                            </div>
-                            <h3 class="post-title">
-                                <a href="/post/2">Stone Ocean — La fin de l'anime était-elle à la hauteur du manga ?</a>
-                            </h3>
-                            <p class="post-excerpt">
-                                Netflix a fait un travail honorable sur Stone Ocean, mais certains passages clés ont été adaptés différemment. La scène finale en particulier divise la communauté...
-                            </p>
-                            <div class="post-footer">
-                                <div class="post-author">
-                                    <div class="avatar" style="background: #C85A88;">J</div>
-                                    <span class="author-name">Jotaro_Kujo</span>
-                                    <span class="post-date">il y a 5h</span>
-                                </div>
-                                <div class="post-stats">
-                                    <span>💬 67</span>
-                                    <span>👁 1 243</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Post 3 -->
-                    <article class="post-card">
-                        <div class="post-accent" style="background: #5BA8B8;"></div>
-                        <div class="post-content">
-                            <div class="post-meta-top">
-                                <div class="post-tags">
-                                    <span class="tag" style="--tag-color: #5BA8B8;">HOT</span>
-                                </div>
-                                <span class="post-category">Communauté › Fan Art</span>
-                            </div>
-                            <h3 class="post-title">
-                                <a href="/post/3">Mon illustration de Gyro Zeppeli en style Renaissance — Inspiré par l'expo Araki</a>
-                            </h3>
-                            <p class="post-excerpt">
-                                Des mois de travail pour rendre hommage au style très influencé par l'art européen classique d'Araki. La pose, le fond à la Caravage, tout y est...
-                            </p>
-                            <div class="post-footer">
-                                <div class="post-author">
-                                    <div class="avatar" style="background: #5BA8B8;">D</div>
-                                    <span class="author-name">DioMio</span>
-                                    <span class="post-date">il y a 1j</span>
-                                </div>
-                                <div class="post-stats">
-                                    <span>💬 23</span>
-                                    <span>👁 542</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Post 4 -->
-                    <article class="post-card">
-                        <div class="post-accent" style="background: #8A7ABE;"></div>
-                        <div class="post-content">
-                            <div class="post-meta-top">
-                                <div class="post-tags">
-                                    <span class="tag" style="--tag-color: #8A7ABE;">Discussion</span>
-                                </div>
-                                <span class="post-category">L'artiste › Style artistique</span>
-                            </div>
-                            <h3 class="post-title">
-                                <a href="/post/4">Évolution du style d'Araki : de Phantom Blood à The JOJOLands</a>
-                            </h3>
-                            <p class="post-excerpt">
-                                L'évolution graphique d'Araki est l'une des plus marquantes du manga. De ses débuts très influencés par Ken le Survivant jusqu'à son style ultra-fashion actuel...
-                            </p>
-                            <div class="post-footer">
-                                <div class="post-author">
-                                    <div class="avatar" style="background: #8A7ABE;">K</div>
-                                    <span class="author-name">KillerQueen99</span>
-                                    <span class="post-date">il y a 2j</span>
-                                </div>
-                                <div class="post-stats">
-                                    <span>💬 41</span>
-                                    <span>👁 734</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                </div>
-                <!-- {{end}} fin boucle posts -->
-            </section>
-
+            </main>
         </div>
-    </main>
+    </div>
 
-    <!-- ===========================
-         FOOTER
-         =========================== -->
-    <footer class="footer">
-        <div class="container footer-inner">
-            <div class="footer-left">
-                <span class="logo-star">★</span>
-                <span class="footer-brand">ARAKI FORUM</span>
-                <span class="footer-sep">—</span>
-                <span class="footer-quote">"Your next line is..."</span>
-            </div>
-            <div class="footer-right">
-                <a href="/about">À propos</a>
-                <a href="/rules">Règles</a>
-                <a href="/contact">Contact</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ===========================
-         JAVASCRIPT
-         =========================== -->
-    <script>
-        // ==============================
-        // THEME TOGGLE — Animation JoJo
-        // ==============================
-        const themeToggle = document.getElementById('themeToggle');
-        const jojoFlash   = document.getElementById('jojoFlash');
-        const html        = document.documentElement;
-
-        // Charger le thème sauvegardé (dark par défaut)
-        const savedTheme = localStorage.getItem('araki-theme') || 'dark';
-        html.setAttribute('data-theme', savedTheme);
-        updateThemeIcon(savedTheme);
-
-        themeToggle.addEventListener('click', () => {
-            const current = html.getAttribute('data-theme');
-            const next    = current === 'dark' ? 'light' : 'dark';
-
-            // Déclencher le flash JoJo
-            jojoFlash.classList.remove('flash-active');
-            void jojoFlash.offsetWidth; // force reflow pour redémarrer l'animation
-            jojoFlash.classList.add('flash-active');
-
-            // Changer le thème au milieu du flash
-            setTimeout(() => {
-                html.setAttribute('data-theme', next);
-                localStorage.setItem('araki-theme', next);
-                updateThemeIcon(next);
-            }, 180);
-        });
-
-        function updateThemeIcon(theme) {
-            const icon = themeToggle.querySelector('.theme-icon');
-            icon.textContent = theme === 'dark' ? '☀️' : '🌙';
-        }
-
-        // ==============================
-        // NAVIGATION DROPDOWNS
-        // ==============================
-        // Fermer tous les dropdowns si clic en dehors
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.nav-item')) {
-                document.querySelectorAll('.nav-item.open').forEach(item => {
-                    item.classList.remove('open');
-                });
-            }
-        });
-
-        // Ouvrir/fermer au clic (touch + clavier)
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                const parent   = link.closest('.nav-item');
-                const dropdown = parent.querySelector('.dropdown');
-                if (!dropdown) return;
-                e.preventDefault();
-                const isOpen = parent.classList.contains('open');
-                document.querySelectorAll('.nav-item.open').forEach(i => i.classList.remove('open'));
-                if (!isOpen) parent.classList.add('open');
-            });
-        });
-
-        // ==============================
-        // ANIMATIONS AU SCROLL
-        // ==============================
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.08 });
-
-        document.querySelectorAll('.post-card, .category-card').forEach(el => observer.observe(el));
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
