@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - Forum Araki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="profile.css">
+
+</head>
+<body>
+    <!-- Star Background -->
+    <div class="star-background">
+        <svg class="jojo-star" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50,15 L58,42 L85,42 L63,58 L71,85 L50,69 L29,85 L37,58 L15,42 L42,42 Z" fill="currentColor"/>
+        </svg>
+    </div>
+
+    <!-- Header -->
+    <header class="top-nav">
+        <div class="top-nav-content">
+            <div class="logo-section">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">⭐</span>
+                    <span class="logo-text">ARAKI</span>
+                </a>
+            </div>
+            <a href="/">← Retour au forum</a>
+        </div>
+    </header>
+
+    <!-- Profile Container -->
+    <div class="auth-container">
+        <div class="auth-box" style="max-width: 700px;">
+            <h2 class="form-title" style="padding: 2rem 2rem 0;">Mon Profil</h2>
+            
+            <form id="profileForm" class="auth-form active">
+                <!-- Avatar Section -->
+                <div class="profile-header">
+                    <div class="avatar-upload">
+                        <div class="avatar-preview" id="profileAvatarPreview">
+                            <img src="" alt="Avatar" id="currentAvatar">
+                        </div>
+                        <label for="newAvatar" class="avatar-label">
+                            <span>Changer la photo</span>
+                            <input type="file" id="newAvatar" name="avatar" accept="image/*">
+                        </label>
+                    </div>
+                    
+                    <div class="profile-info">
+                        <h3 id="profileUsername">Username</h3>
+                        <p id="profileEmail">email@example.com</p>
+                        <p class="member-since">Membre depuis --</p>
+                    </div>
+                </div>
+
+                <!-- Bio -->
+                <div class="form-group">
+                    <label for="bio">Biographie</label>
+                    <textarea id="bio" name="bio" rows="4" placeholder="Parlez-nous de vous..."></textarea>
+                </div>
+
+                <!-- Location -->
+                <div class="form-group">
+                    <label for="location">Localisation</label>
+                    <input type="text" id="location" name="location" placeholder="Tokyo, Japon">
+                </div>
+                <div class="preferences-section">
+                    <h3 class="section-title">Centres d'intérêt</h3>
+                    <div id="userInterests" class="tags-display">
+                    </div>
+                </div>
+
+                <!-- JoJo Preferences -->
+                <div class="preferences-section">
+                    <h3 class="section-title">Préférences JoJo</h3>
+                    
+                    <div class="form-group">
+                        <label for="favorite-part">Partie préférée</label>
+                        <select id="favorite-part" name="favorite_jojo_part">
+                            <option value="">-- Choisir --</option>
+                            <option value="part1">Part 1 - Phantom Blood</option>
+                            <option value="part2">Part 2 - Battle Tendency</option>
+                            <option value="part3">Part 3 - Stardust Crusaders</option>
+                            <option value="part4">Part 4 - Diamond is Unbreakable</option>
+                            <option value="part5">Part 5 - Golden Wind</option>
+                            <option value="part6">Part 6 - Stone Ocean</option>
+                            <option value="part7">Part 7 - Steel Ball Run</option>
+                            <option value="part8">Part 8 - JoJolion</option>
+                            <option value="part9">Part 9 - The JOJOLands</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="favorite-stand">Stand/Personnage préféré</label>
+                        <input type="text" id="favorite-stand" name="favorite_stand" placeholder="Star Platinum, Killer Queen...">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Sauvegarder les modifications</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+</html>

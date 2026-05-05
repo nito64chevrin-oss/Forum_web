@@ -1,4 +1,4 @@
-// Theme Toggle with JoJo-style animation
+
 const themeToggle = document.getElementById('themeToggle');
 const html = document.documentElement;
 
@@ -148,7 +148,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Add loading animation on page load
+
+
 window.addEventListener('load', () => {
     document.body.style.opacity = '0';
     document.body.style.transition = 'opacity 0.3s ease';
@@ -217,3 +218,67 @@ console.log('%cBienvenue sur le forum dédié à Hirohiko Araki !', 'color: #5BA
 console.log('%cRaccourcis clavier:', 'color: #4A5A9E; font-weight: bold;');
 console.log('%c  • Ctrl/Cmd + K : Recherche', 'color: #999;');
 console.log('%c  • Ctrl/Cmd + D : Toggle Dark/Light mode', 'color: #999;');
+
+// Bouton déconnexion
+const logoutBtn = document.getElementById('logoutBtn');
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+        // Supprimer les données utilisateur
+        localStorage.removeItem('user');
+        
+        // Rediriger vers l'accueil
+        window.location.reload();
+    });
+}
+
+function loadUserInNavbar() {
+    const userData = localStorage.getItem('user');
+    
+    if (!userData) {
+        return;
+    }
+    
+    const user = JSON.parse(userData);
+    
+    fetch(`/api/user?email=${user.email}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const userProfile = data.user;
+                
+                const loginBtn = document.getElementById('loginBtn');
+                const avatarImg = document.getElementById('userAvatar');
+                const usernameElement = document.getElementById('userName');
+                const userProfileDiv = document.getElementById('userProfile');
+                
+                console.log('🔍 Elements trouvés:', {
+                    loginBtn: loginBtn,
+                    avatarImg: avatarImg,
+                    usernameElement: usernameElement,
+                    userProfileDiv: userProfileDiv
+                });
+                
+                if (avatarImg && usernameElement && userProfileDiv) {
+                    let avatarSrc = 'static/images/default-avatar.png';
+                    
+                    if (userProfile.avatar_url && userProfile.avatar_url.startsWith('data:image')) {
+                        avatarSrc = userProfile.avatar_url;
+                    }
+                    
+                    avatarImg.src = avatarSrc;
+                    usernameElement.textContent = userProfile.username;
+                    userProfileDiv.style.display = 'flex';
+                    
+                    if (loginBtn) {
+                        loginBtn.style.display = 'none';
+                    }
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Erreur chargement profil:', error);
+        });
+}
+
+loadUserInNavbar();
+

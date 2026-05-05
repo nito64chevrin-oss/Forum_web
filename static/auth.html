@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Forum Araki</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="auth.css">
+    <a href="index.html"> 
+</head>
+<body>
+    <!-- Rotating Star Background -->
+    <div class="star-background">
+        <svg class="jojo-star" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50,15 L58,42 L85,42 L63,58 L71,85 L50,69 L29,85 L37,58 L15,42 L42,42 Z" fill="currentColor"/>
+        </svg>
+    </div>
+
+    <!-- Top Navigation -->
+    <header class="top-nav">
+        <div class="top-nav-content">
+            <div class="logo-section">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">⭐</span>
+                    <span class="logo-text">ARAKI</span>
+                </a>
+            </div>
+            <a href="index.html" class="back-link">← Retour au forum</a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="auth-container">
+        <div class="auth-box">
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Connexion</button>
+                <button class="auth-tab" data-tab="register">Inscription</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active">
+                <h2 class="form-title">Bienvenue !</h2>
+                <p class="form-subtitle">Connectez-vous pour accéder au forum</p>
+
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" name="email" required placeholder="votre@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">Mot de passe</label>
+                    <input type="password" id="login-password" name="password" required placeholder="••••••••">
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="remember">
+                        <span>Se souvenir de moi</span>
+                    </label>
+                    <a href="#" class="forgot-link">Mot de passe oublié ?</a>
+                </div>
+
+                <button type="submit" class="btn-submit">Se connecter</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="auth-form">
+                <h2 class="form-title">Rejoignez-nous !</h2>
+                <p class="form-subtitle">Créez votre compte en quelques étapes</p>
+
+                <!-- Avatar Upload -->
+                <div class="avatar-upload">
+                    <div class="avatar-preview" id="avatarPreview">
+                        <span class="avatar-placeholder">📷</span>
+                    </div>
+                    <label for="avatar" class="avatar-label">
+                        <span>Choisir une photo de profil</span>
+                        <input type="file" id="avatar" name="avatar" accept="image/*">
+                    </label>
+                </div>
+
+                <!-- Basic Info -->
+                <div class="form-group">
+                    <label for="register-username">Nom d'utilisateur *</label>
+                    <input type="text" id="register-username" name="username" required placeholder="StandMaster">
+                </div>
+
+                <div class="form-group">
+                    <label for="register-email">Email *</label>
+                    <input type="email" id="register-email" name="email" required placeholder="votre@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="register-password">Mot de passe *</label>
+                    <input type="password" id="register-password" name="password" required placeholder="••••••••">
+                    <div class="password-strength" id="passwordStrength">
+                        <div class="strength-bar"></div>
+                    </div>
+                    <small class="form-hint">Minimum 8 caractères</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="register-confirm">Confirmer le mot de passe *</label>
+                    <input type="password" id="register-confirm" name="confirm" required placeholder="••••••••">
+                </div>
+
+                <!-- JoJo Preferences -->
+                <div class="preferences-section">
+                    <h3 class="section-title">Vos préférences JoJo</h3>
+                    
+                    <div class="form-group">
+                        <label for="favorite-part">Partie préférée</label>
+                        <select id="favorite-part" name="favorite_jojo_part">
+                            <option value="">-- Choisir --</option>
+                            <option value="part1">Part 1 - Phantom Blood</option>
+                            <option value="part2">Part 2 - Battle Tendency</option>
+                            <option value="part3">Part 3 - Stardust Crusaders</option>
+                            <option value="part4">Part 4 - Diamond is Unbreakable</option>
+                            <option value="part5">Part 5 - Golden Wind</option>
+                            <option value="part6">Part 6 - Stone Ocean</option>
+                            <option value="part7">Part 7 - Steel Ball Run</option>
+                            <option value="part8">Part 8 - JoJolion</option>
+                            <option value="part9">Part 9 - The JOJOLands</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="favorite-stand">Stand/Personnage préféré</label>
+                        <input type="text" id="favorite-stand" name="favorite_stand" placeholder="Star Platinum, Killer Queen...">
+                    </div>
+                </div>
+
+                <!-- Tags Preferences -->
+                <div class="preferences-section">
+                    <h3 class="section-title">Centres d'intérêt</h3>
+                    <p class="form-hint">Sélectionnez les sujets qui vous intéressent</p>
+                    
+                    <div class="tags-grid">
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="interests" value="manga">
+                            <span class="tag-item tag-blue">Manga</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="interests" value="anime">
+                            <span class="tag-item tag-cyan">Anime</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="interests" value="stands">
+                            <span class="tag-item tag-violet">Stands</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="interests" value="theories">
+                            <span class="tag-item tag-pink">Théories</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="interests" value="characters">
+                            <span class="tag-item tag-blue">Personnages</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="interests" value="fanart">
+                            <span class="tag-item tag-cyan">Fan Art</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="interests" value="cosplay">
+                            <span class="tag-item tag-pink">Cosplay</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="interests" value="ost">
+                            <span class="tag-item tag-violet">OST</span>
+                        </label>
+                    </div>
+                </div>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" name="terms" required>
+                    <span>J'accepte les <a href="#">conditions d'utilisation</a></span>
+                </label>
+
+                <button type="submit" class="btn-submit">Créer mon compte</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>

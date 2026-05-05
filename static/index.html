@@ -27,28 +27,84 @@
                 </div>
             </div>
             <nav class="main-nav">
-                <a href="#" class="nav-link">ACCUEIL</a>
-                <a href="#" class="nav-link">MANGA</a>
-                <a href="#" class="nav-link">ANIME</a>
-                <a href="#" class="nav-link">ARTISTE</a>
-                <a href="#" class="nav-link">COMMUNAUTÉ</a>
-            </nav>
+            <a href="" class="nav-link">ACCUEIL</a>
+            <a href="https://jojo-news.com" class="nav-link">JoJo News</a>
+            
+            <div class="nav-dropdown">
+                <a href="#" class="nav-link dropdown-trigger">
+                    MANGA
+                    <span class="dropdown-arrow">▼</span>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part1/" class="dropdown-link">Phantom Blood</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part2/" class="dropdown-link">Battle Tendency</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part3/" class="dropdown-link">Stardust Crusaders</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part4/" class="dropdown-link">Diamond is Unbreakable</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part5/" class="dropdown-link">Golden Wind</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part6/" class="dropdown-link">Stone Ocean</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part7/" class="dropdown-link">Steel Ball Run</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part8/" class="dropdown-link">JoJolion</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part9/" class="dropdown-link">JOJOLands</a>
+                    <a href="https://mangadex.org/title/041ecc98-6e70-4b3d-8a94-ed1245d5ba28/baoh" class="dropdown-link">Baoh</a>
+                </div>
+            </div>
+            
+            <div class="nav-dropdown">
+                <a href="#" class="nav-link dropdown-trigger">
+                    ANIME
+                    <span class="dropdown-arrow">▼</span>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/saison1/vostfr/" class="dropdown-link">Phantom Blood</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/saison2/vostfr/" class="dropdown-link">Battle Tendency</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/saison3/vostfr/" class="dropdown-link">Stardust Crusaders</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/saison4/vostfr/" class="dropdown-link">Diamond is Unbreakable</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/saison5/vostfr/" class="dropdown-link">Golden Wind</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/saison6/vostfr/" class="dropdown-link">Stone Ocean</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/saison7/vostfr/" class="dropdown-link">Steel Ball Run</a>
+                    <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/oav/vostfr/" class="dropdown-link">Rohan Kishibe</a>
+                    <a href="https://archive.org/details/baoh-english-full-ova-anime-high-quality" class="dropdown-link">Baoh</a>
+                </div>
+            </div>
+            
+            <div class="nav-dropdown">
+                <a href="#" class="nav-link dropdown-trigger">
+                    COMMUNAUTÉ
+                    <span class="dropdown-arrow">▼</span>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-link">Forums</a>
+                    <a href="#" class="dropdown-link">Fan Art</a>
+                    <a href="#" class="dropdown-link">Théories</a>
+                    <a href="#" class="dropdown-link">Événements</a>
+                </div>
+            </div>
+        </nav>
             <div class="user-actions">
                 <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
                     <span class="theme-icon">🌙</span>
                 </button>
-                <button class="btn-connect">Se connecter</button>
+                
+                <a href="auth.html" class="btn-connect" id="loginBtn">Se connecter</a>
+
+                <div class="user-profile" id="userProfile" style="display: none;">
+                    <img src="static/images/default-avatar.png" alt="Avatar" class="user-avatar" id="userAvatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                    <span class="user-name" id="userName"></span>
+                    <div class="user-dropdown">
+                        <a href="profile.html" class="dropdown-item">Mon profil</a>
+                        <button class="dropdown-item logout-btn" id="logoutBtn">Se déconnecter</button>
+                    </div>
+                </div>
+                
                 <button class="btn-search" aria-label="Rechercher">🔍</button>
                 <button class="btn-menu" aria-label="Menu">☰</button>
             </div>
         </div>
     </header>
 
-    <!-- Forum Header -->
     <div class="forum-header">
         <div class="forum-header-content">
             <h1 class="forum-title">
-                <span class="forum-icon">💬</span>
                 FORUM
             </h1>
         </div>
