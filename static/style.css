@@ -731,6 +731,7 @@ body,
 .dropdown-arrow {
     font-size: 0.7rem;
     transition: transform 0.2s ease;
+    display: none;
 }
 
 .nav-dropdown:hover .dropdown-arrow {
@@ -782,4 +783,38 @@ body,
 .dropdown-link:last-child {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
+}
+
+.main-nav .nav-dropdown:nth-of-type(1) .dropdown-trigger::after {
+    background-image: url('static/images/manga-bg.gif');
+    background-size: 150%;
+}
+
+.main-nav .nav-dropdown:nth-of-type(2) .dropdown-trigger::after {
+    background-image: url('static/images/anime-bg.gif');
+    background-size: 150%;
+}
+
+.main-nav .nav-dropdown:nth-of-type(3) .dropdown-trigger::after {
+    background-image: url('static/images/community-bg.gif');
+    background-size: 150%;
+}
+
+.dropdown-trigger::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.dropdown-trigger:hover::after {
+    opacity: 0.8;
+    background-size: 180% !important;
 }

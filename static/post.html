@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post - Forum Araki</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="post.css">
+</head>
+<body>
+    <!-- Header (même que index.html) -->
+    <header class="top-nav">
+        <div class="top-nav-content">
+            <div class="logo-section">
+                <div class="logo">
+                    <span class="logo-text">ARAKI Forum</span>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="/" class="nav-link">ACCUEIL</a>
+                <a href="https://jojo-news.com" class="nav-link">JoJo News</a>
+                
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger">
+                        MANGA
+                        <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part1/" class="dropdown-link">Phantom Blood</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part2/" class="dropdown-link">Battle Tendency</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part3/" class="dropdown-link">Stardust Crusaders</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part4/" class="dropdown-link">Diamond is Unbreakable</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part5/" class="dropdown-link">Golden Wind</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part6/" class="dropdown-link">Stone Ocean</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part7/" class="dropdown-link">Steel Ball Run</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part8/" class="dropdown-link">JoJolion</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/scan/part9/" class="dropdown-link">JOJOLands</a>
+                        <a href="https://mangadex.org/title/041ecc98-6e70-4b3d-8a94-ed1245d5ba28/baoh" class="dropdown-link">Baoh</a>
+                    </div>
+                </div>
+                
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger">
+                        ANIME
+                        <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/saison1/vostfr/" class="dropdown-link">Phantom Blood</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/saison2/vostfr/" class="dropdown-link">Battle Tendency</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/saison3/vostfr/" class="dropdown-link">Stardust Crusaders</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/saison4/vostfr/" class="dropdown-link">Diamond is Unbreakable</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/saison5/vostfr/" class="dropdown-link">Golden Wind</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/saison6/vostfr/" class="dropdown-link">Stone Ocean</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/saison7/vostfr/" class="dropdown-link">Steel Ball Run</a>
+                        <a href="https://anime-sama.to/catalogue/jojos-bizarre-adventure/oav/vostfr/" class="dropdown-link">Rohan Kishibe</a>
+                        <a href="https://archive.org/details/baoh-english-full-ova-anime-high-quality" class="dropdown-link">Baoh</a>
+                    </div>
+                </div>
+                
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger">
+                        COMMUNAUTÉ
+                        <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="/" class="dropdown-link">Forums</a>
+                        <a href="#" class="dropdown-link">Fan Art</a>
+                        <a href="#" class="dropdown-link">Théories</a>
+                        <a href="#" class="dropdown-link">Événements</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="user-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                
+                <a href="auth.html" class="btn-connect" id="loginBtn">Se connecter</a>
+
+                <div class="user-profile" id="userProfile" style="display: none;">
+                    <img src="static/images/default-avatar.png" alt="Avatar" class="user-avatar" id="userAvatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                    <span class="user-name" id="userName"></span>
+                    <div class="user-dropdown">
+                        <a href="profile.html" class="dropdown-item">Mon profil</a>
+                        <button class="dropdown-item logout-btn" id="logoutBtn">Se déconnecter</button>
+                    </div>
+                </div>
+                
+                <button class="btn-menu" aria-label="Menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="post-layout">
+            <!-- Sidebar à gauche -->
+            <aside class="post-sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">📌 Autres posts</h3>
+                    <div class="related-posts" id="relatedPosts">
+                        <div class="loading">Chargement...</div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Contenu principal à droite -->
+            <div class="post-main-content">
+            <!-- Bouton retour -->
+            <a href="/" class="btn-back">← Retour au forum</a>
+
+            <!-- Contenu du post -->
+            <article class="post-detail" id="postDetail">
+                <!-- Skeleton pendant le chargement -->
+                <div class="loading-skeleton">
+                    <div class="skeleton-line title"></div>
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
+                </div>
+            </article>
+
+            <!-- Section commentaires -->
+            <section class="comments-section">
+                <h2 class="comments-title">💬 Commentaires</h2>
+
+                <!-- Formulaire d'ajout de commentaire -->
+                <form class="comment-form" id="commentForm" style="display: none;">
+                    <textarea 
+                        id="commentContent" 
+                        placeholder="Ajouter un commentaire..." 
+                        rows="4"
+                        required
+                    ></textarea>
+                    
+                    <div class="comment-form-attachments">
+                        <label class="btn-attach-image" for="commentImageInput">
+                            📎 Ajouter une image
+                        </label>
+                        <input 
+                            type="file" 
+                            id="commentImageInput" 
+                            accept="image/*" 
+                            style="display: none;"
+                        >
+                        <div id="imagePreview" class="image-preview" style="display: none;">
+                            <img id="previewImg" src="" alt="Aperçu">
+                            <button type="button" class="btn-remove-image" id="removeImageBtn">✕</button>
+                        </div>
+                    </div>
+                    
+                    <div class="comment-form-actions">
+                        <button type="submit" class="btn-submit-comment">Publier</button>
+                    </div>
+                </form>
+
+                <div class="login-prompt" id="loginPrompt">
+                    <p>Connectez-vous pour commenter</p>
+                    <a href="/auth.html" class="btn-login">Se connecter</a>
+                </div>
+
+                <!-- Liste des commentaires -->
+                <div class="comments-list" id="commentsList">
+                    <!-- Les commentaires seront chargés ici -->
+                </div>
+            </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="post.js"></script>
+</body>
+</html>

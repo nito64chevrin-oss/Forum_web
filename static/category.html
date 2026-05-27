@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catégorie - Forum Araki</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="posts-display.css">
+    <link rel="stylesheet" href="category.css">
+</head>
+<body>
+    <!-- Header (même que index.html) -->
+    <header class="top-nav">
+        <div class="top-nav-content">
+            <div class="logo-section">
+                <div class="logo">
+                    <span class="logo-text">ARAKI Forum</span>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="/" class="nav-link">ACCUEIL</a>
+                <a href="https://jojo-news.com" class="nav-link">JoJo News</a>
+            </nav>
+            <div class="user-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                
+                <a href="auth.html" class="btn-connect" id="loginBtn">Se connecter</a>
+
+                <div class="user-profile" id="userProfile" style="display: none;">
+                    <img src="static/images/default-avatar.png" alt="Avatar" class="user-avatar" id="userAvatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                    <span class="user-name" id="userName"></span>
+                    <div class="user-dropdown">
+                        <a href="profile.html" class="dropdown-item">Mon profil</a>
+                        <button class="dropdown-item logout-btn" id="logoutBtn">Se déconnecter</button>
+                    </div>
+                </div>
+                
+                <button class="btn-menu" aria-label="Menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="category-view">
+            <!-- Bouton retour -->
+            <a href="/" class="btn-back">← Retour au forum</a>
+
+            <!-- Titre catégorie -->
+            <h1 class="category-title" id="categoryTitle">Catégorie</h1>
+
+            <!-- Filtres par tags -->
+            <div class="tags-filter">
+                <h3 class="filter-title">Filtrer par tags</h3>
+                <div class="tags-list" id="tagsList">
+                    <!-- Tags générés ici -->
+                </div>
+            </div>
+
+            <!-- Posts -->
+            <div class="category-posts">
+                <h2 class="posts-title">Posts</h2>
+                <div class="posts-grid" id="postsGrid">
+                    <!-- Posts générés ici -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="category.js"></script>
+</body>
+</html>

@@ -85,6 +85,60 @@ if (newAvatarInput) {
     });
 }
 
+// À ajouter dans profile.js
+
+// Fonction pour afficher les stats utilisateur
+function displayUserStats(stats) {
+    if (!stats) return;
+    
+    // Stats principales uniquement
+    document.getElementById('postsCount').textContent = stats.posts_count || 0;
+    document.getElementById('commentsCount').textContent = stats.comments_count || 0;
+    document.getElementById('likesReceived').textContent = stats.likes_received || 0;
+    
+    console.log('📊 Stats affichées:', stats);
+}
+
+// Modifier la fonction loadUserProfile existante pour inclure les stats
+async function loadUserProfile() {
+    const user = localStorage.getItem('user');
+    
+    if (!user) {
+        window.location.href = '/auth.html';
+        return;
+    }
+    
+    const userData = JSON.parse(user);
+    
+    try {
+        const response = await fetch(`/api/user?email=${encodeURIComponent(userData.email)}`);
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            // Afficher les infos de profil
+            displayUserProfile(data.user);
+            
+            // Afficher les stats
+            if (data.stats) {
+                displayUserStats(data.stats);
+            }
+        } else {
+            console.error('❌ Erreur:', data.error);
+            alert('Erreur lors du chargement du profil');
+        }
+    } catch (error) {
+        console.error('❌ Erreur réseau:', error);
+        alert('Erreur de connexion au serveur');
+    }
+}
+
+// Appeler au chargement de la page
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadUserProfile);
+} else {
+    loadUserProfile();
+}
+
 const profileForm = document.getElementById('profileForm');
 if (profileForm) {
     profileForm.addEventListener('submit', (e) => {

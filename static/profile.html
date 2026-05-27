@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="auth.css">
     <link rel="stylesheet" href="profile.css">
-
 </head>
 <body>
     <!-- Star Background -->
@@ -23,8 +22,7 @@
         <div class="top-nav-content">
             <div class="logo-section">
                 <a href="index.html" class="logo">
-                    <span class="logo-icon">⭐</span>
-                    <span class="logo-text">ARAKI</span>
+                    <span class="logo-text">ARAKI Forum</span>
                 </a>
             </div>
             <a href="/">← Retour au forum</a>
@@ -34,7 +32,8 @@
     <!-- Profile Container -->
     <div class="auth-container">
         <div class="auth-box" style="max-width: 700px;">
-            <h2 class="form-title" style="padding: 2rem 2rem 0;">Mon Profil</h2>
+            <!-- Titre hors du form -->
+            <h2 class="form-title">MON PROFIL</h2>
             
             <form id="profileForm" class="auth-form active">
                 <!-- Avatar Section -->
@@ -62,15 +61,36 @@
                     <textarea id="bio" name="bio" rows="4" placeholder="Parlez-nous de vous..."></textarea>
                 </div>
 
+                <section class="profile-stats">
+                    <h2 class="section-title">Statistiques</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="postsCount">0</div>
+                            <div class="stat-label">Posts publiés</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-value" id="commentsCount">0</div>
+                            <div class="stat-label">Commentaires</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-value" id="likesReceived">0</div>
+                            <div class="stat-label">Likes reçus</div>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Location -->
                 <div class="form-group">
                     <label for="location">Localisation</label>
                     <input type="text" id="location" name="location" placeholder="Tokyo, Japon">
                 </div>
+
+                <!-- Centres d'intérêt -->
                 <div class="preferences-section">
                     <h3 class="section-title">Centres d'intérêt</h3>
-                    <div id="userInterests" class="tags-display">
-                    </div>
+                    <div id="userInterests" class="tags-display"></div>
                 </div>
 
                 <!-- JoJo Preferences -->

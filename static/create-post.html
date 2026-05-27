@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un post - Forum Araki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="create-post.css">
+</head>
+<body>
+    <!-- Star Background -->
+    <div class="star-background">
+        <svg class="jojo-star" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50,15 L58,42 L85,42 L63,58 L71,85 L50,69 L29,85 L37,58 L15,42 L42,42 Z" fill="currentColor"/>
+        </svg>
+    </div>
+
+    <!-- Header -->
+    <header class="top-nav">
+        <div class="top-nav-content">
+            <div class="logo-section">
+                <a href="/" class="logo">
+                    <span class="logo-icon">⭐</span>
+                    <span class="logo-text">ARAKI</span>
+                </a>
+            </div>
+            <a href="/" class="back-link">← Retour au forum</a>
+        </div>
+    </header>
+
+    <!-- Create Post Container -->
+    <div class="container">
+        <div class="create-post-container">
+            <h1 class="page-title">📝 Créer un nouveau post</h1>
+
+            <form id="createPostForm" class="post-form">
+                <!-- Titre -->
+                <div class="form-group">
+                    <label for="title">Titre du post *</label>
+                    <input type="text" id="title" name="title" required placeholder="Un titre accrocheur...">
+                </div>
+
+                <!-- Catégories -->
+                <div class="form-group">
+                    <label>Catégories * (au moins 1)</label>
+                    <div class="categories-grid">
+                        <label class="category-checkbox">
+                            <input type="checkbox" name="categories" value="1">
+                            <span class="category-label">📚 Manga</span>
+                        </label>
+                        <label class="category-checkbox">
+                            <input type="checkbox" name="categories" value="2">
+                            <span class="category-label">🎬 Anime</span>
+                        </label>
+                        <label class="category-checkbox">
+                            <input type="checkbox" name="categories" value="3">
+                            <span class="category-label">📖 Autres œuvres</span>
+                        </label>
+                        <label class="category-checkbox">
+                            <input type="checkbox" name="categories" value="4">
+                            <span class="category-label">🎨 L'artiste Araki</span>
+                        </label>
+                        <label class="category-checkbox">
+                            <input type="checkbox" name="categories" value="5">
+                            <span class="category-label">👥 Communauté</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Contenu -->
+                <div class="form-group">
+                    <label for="content">Contenu *</label>
+                    <textarea id="content" name="content" rows="10" required placeholder="Partagez vos pensées, théories, analyses..."></textarea>
+                    <div class="char-count">
+                        <span id="charCount">0</span> caractères
+                    </div>
+                </div>
+
+                <!-- Image (optionnel) -->
+                <div class="form-group">
+                    <label for="image">Image (optionnel)</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                    <div id="imagePreview" class="image-preview"></div>
+                </div>
+
+                <!-- Tags -->
+                <div class="form-group">
+                    <label>Tags (sélectionnez jusqu'à 5)</label>
+                    <div class="tags-grid">
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="tags" value="discussion">
+                            <span class="tag-label">Discussion</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="tags" value="theorie">
+                            <span class="tag-label">Théorie</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="tags" value="analyse">
+                            <span class="tag-label">Analyse</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="tags" value="question">
+                            <span class="tag-label">Question</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="tags" value="spoiler">
+                            <span class="tag-label">⚠️ Spoiler</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="tags" value="news">
+                            <span class="tag-label">Actualité</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="tags" value="fan-art">
+                            <span class="tag-label">Fan Art</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="tags" value="cosplay">
+                            <span class="tag-label">Cosplay</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="tags" value="meme">
+                            <span class="tag-label">Mème</span>
+                        </label>
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="tags" value="recommendation">
+                            <span class="tag-label">Recommandation</span>
+                        </label>
+                    </div>
+                    <p class="helper-text" id="tagCount">0/5 tags sélectionnés</p>
+                </div>
+
+                <!-- Boutons -->
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="window.location.href='/'">Annuler</button>
+                    <button type="submit" class="btn-submit">Publier le post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="create-post.js"></script>
+</body>
+</html>

@@ -1,4 +1,3 @@
-// Switch between Login and Register tabs
 const authTabs = document.querySelectorAll('.auth-tab');
 const authForms = document.querySelectorAll('.auth-form');
 
@@ -34,7 +33,6 @@ if (avatarInput) {
     });
 }
 
-// Password Strength Checker
 const passwordInput = document.getElementById('register-password');
 const strengthBar = document.querySelector('.strength-bar');
 
@@ -68,6 +66,7 @@ function calculatePasswordStrength(password) {
     return strength;
 }
 
+
 const loginForm = document.getElementById('loginForm');
 
 if (loginForm) {
@@ -77,24 +76,37 @@ if (loginForm) {
         const formData = new FormData(loginForm);
         const email = formData.get('email');
         const password = formData.get('password');
-        
-        console.log('Login attempt:', email);
-        
-        // Créer utilisateur temporaire
-        const user = {
-            username: email.split('@')[0],
-            email: email,
-            avatar: 'images/default-avatar.png',
-            bio: '',
-            location: '',
-            favorite_jojo_part: '',
-            favorite_stand: ''
-        };
-        localStorage.setItem('user', JSON.stringify(user));
-        
-        console.log('User saved:', user);
-        
-        window.location.href = 'profile.html';
+
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                console.log('Connexion réussie !');
+                
+                localStorage.setItem('user', JSON.stringify({
+                    email: data.user.email,
+                    username: data.user.username
+                }));
+                
+                window.location.href = '/';
+            } else {
+                console.log('Connexion échouée:', data.error);
+                alert('' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Erreur réseau:', error);
+            alert('Erreur de connexion au serveur');
+        });
     });
 }
 
@@ -144,18 +156,15 @@ if (registerForm) {
             password: password,
             favorite_jojo_part: formData.get('favorite_jojo_part') || '',
             favorite_stand: formData.get('favorite_stand') || '',
-            interests: interests,  // ✅ Maintenant c'est défini !
+            interests: interests,
             bio: '',
             location: '',
             avatar: 'images/default-avatar.png'
         };
         
-        console.log('User object created:', newUser);
-        
         const avatarFile = formData.get('avatar');
         
         if (avatarFile && avatarFile.size > 0) {
-            console.log('Avatar file detected, reading...');
             const reader = new FileReader();
             reader.onload = (event) => {
                 newUser.avatar = event.target.result;
@@ -181,15 +190,18 @@ function saveUserAndRedirect(user) {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
-            localStorage.setItem('user', JSON.stringify(user));
-            window.location.href = 'profile.html';
+            
+            localStorage.setItem('user', JSON.stringify({
+                email: user.email,
+                username: user.username
+            }));
+            
+            window.location.href = '/';
         } else {
-            alert('❌ Erreur : ' + data.error);
+            alert('Erreur : ' + data.error);
         }
     })
     .catch(error => {
-        console.error('Erreur:', error);
-        alert('❌ Erreur de connexion au serveur');
+        alert('Erreur de connexion au serveur');
     });
 }
-console.log('%c⭐ AUTH.JS CHARGÉ ⭐', 'color: #FF6B35; font-size: 16px; font-weight: bold;');
