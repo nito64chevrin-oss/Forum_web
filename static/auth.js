@@ -16,7 +16,6 @@ authTabs.forEach(tab => {
     });
 });
 
-// Avatar Preview
 const avatarInput = document.getElementById('avatar');
 const avatarPreview = document.getElementById('avatarPreview');
 
@@ -90,7 +89,6 @@ if (loginForm) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                console.log('Connexion réussie !');
                 
                 localStorage.setItem('user', JSON.stringify({
                     email: data.user.email,
@@ -99,13 +97,9 @@ if (loginForm) {
                 
                 window.location.href = '/';
             } else {
-                console.log('Connexion échouée:', data.error);
-                alert('' + data.error);
             }
         })
         .catch(error => {
-            console.error('Erreur réseau:', error);
-            alert('Erreur de connexion au serveur');
         });
     });
 }
@@ -116,7 +110,6 @@ if (registerForm) {
     registerForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        console.log('Register form submitted');
         
         const formData = new FormData(registerForm);
         
@@ -124,12 +117,10 @@ if (registerForm) {
         const confirm = formData.get('confirm');
         
         if (password !== confirm) {
-            alert('Les mots de passe ne correspondent pas !');
             return;
         }
         
         if (password.length < 8) {
-            alert('Le mot de passe doit contenir au moins 8 caractères !');
             return;
         }
         
@@ -137,18 +128,15 @@ if (registerForm) {
         const email = formData.get('email');
         
         if (!username || !email) {
-            alert('Veuillez remplir tous les champs obligatoires !');
             return;
         }
         
-        console.log('Validation passed');
         
         const interests = [];
         formData.getAll('interests').forEach(interest => {
             interests.push(interest);
         });
         
-        console.log('Interests:', interests);
         
         const newUser = {
             username: username,
@@ -172,14 +160,12 @@ if (registerForm) {
             };
             reader.readAsDataURL(avatarFile);
         } else {
-            console.log('No avatar, using default');
             saveUserAndRedirect(newUser);
         }
     });
 }
 
 function saveUserAndRedirect(user) {
-    console.log('Envoi au backend:', user);
     fetch('/api/register', {
         method: 'POST',
         headers: {
@@ -198,10 +184,8 @@ function saveUserAndRedirect(user) {
             
             window.location.href = '/';
         } else {
-            alert('Erreur : ' + data.error);
         }
     })
     .catch(error => {
-        alert('Erreur de connexion au serveur');
     });
 }

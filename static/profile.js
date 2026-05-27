@@ -1,5 +1,4 @@
-// Profile page - Fixed IDs
-console.log('👤 Profile.js loaded');
+
 
 let currentUser = null;
 
@@ -7,12 +6,10 @@ let currentUser = null;
 function loadCurrentUser() {
     const userStr = localStorage.getItem('user');
     if (!userStr) {
-        console.log('❌ Not logged in');
         return null;
     }
     try {
         currentUser = JSON.parse(userStr);
-        console.log('✅ User loaded:', currentUser.username);
         return currentUser;
     } catch (e) {
         console.error('Error parsing user:', e);
@@ -22,17 +19,14 @@ function loadCurrentUser() {
 
 // Au chargement du DOM
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('📄 DOM loaded');
     
     currentUser = loadCurrentUser();
 
     if (!currentUser) {
-        console.log('❌ Redirecting to login');
         window.location.href = 'auth.html';
         return;
     }
 
-    console.log('✅ Loading profile for:', currentUser.email);
     loadUserProfile();
 });
 
@@ -42,7 +36,6 @@ async function loadUserProfile() {
         const response = await fetch(`/api/user?email=${encodeURIComponent(currentUser.email)}`);
         const data = await response.json();
 
-        console.log('📦 API Response:', data);
 
         if (data.status === 'success') {
             displayUserProfile(data.user);
@@ -59,13 +52,11 @@ async function loadUserProfile() {
 
 // Afficher le profil
 function displayUserProfile(user) {
-    console.log('Displaying profile:', user);
     
     // Avatar - correcter: c'est #currentAvatar pas #profileAvatar
     const avatarImg = document.getElementById('currentAvatar');
     if (avatarImg) {
         avatarImg.src = user.avatar_url || 'static/images/default-avatar.png';
-        console.log('✅ Avatar set');
     }
 
     // Infos principales
@@ -74,7 +65,6 @@ function displayUserProfile(user) {
     
     if (usernameField) usernameField.textContent = user.username;
     if (emailField) emailField.textContent = user.email;
-    console.log('✅ Username and email set');
 
     // Date de création - dans le HTML c'est .member-since
     const memberSinceField = document.querySelector('.member-since');
@@ -85,36 +75,31 @@ function displayUserProfile(user) {
             day: 'numeric'
         });
         memberSinceField.textContent = `Membre depuis ${date}`;
-        console.log('✅ Member since set');
     }
 
     // Update form fields for editing - avec les bons IDs du HTML
     const bioInput = document.getElementById('bio');
-    const standInput = document.getElementById('favorite-stand');  // ✅ avec tiret
-    const partInput = document.getElementById('favorite-part');    // ✅ avec tiret
+    const standInput = document.getElementById('favorite-stand');  
+    const partInput = document.getElementById('favorite-part');   
     const locationInput = document.getElementById('location');
     
     if (bioInput) bioInput.value = user.bio || '';
     if (standInput) standInput.value = user.favorite_stand || '';
     if (partInput) partInput.value = user.favorite_jojo_part || '';
     if (locationInput) locationInput.value = user.location || '';
-    
-    console.log('✅ Form fields filled');
 }
 
 // Afficher les stats
 function displayUserStats(stats) {
-    console.log('Displaying stats:', stats);
     
     const postsCount = document.getElementById('postsCount');
     const commentsCount = document.getElementById('commentsCount');
-    const likesReceived = document.getElementById('likesReceived');  // ✅ correct ID
+    const likesReceived = document.getElementById('likesReceived'); 
 
     if (postsCount) postsCount.textContent = stats.posts_count || 0;
     if (commentsCount) commentsCount.textContent = stats.comments_count || 0;
     if (likesReceived) likesReceived.textContent = stats.likes_received || 0;
     
-    console.log('✅ Stats displayed');
 }
 
 // Soumettre le formulaire de profil
@@ -128,9 +113,6 @@ if (profileForm) {
         const favoritePart = document.getElementById('favorite-part')?.value.trim() || '';
         const location = document.getElementById('location')?.value.trim() || '';
 
-        console.log('📝 Submitting form with:', {
-            bio, favoriteStand, favoritePart, location
-        });
 
         try {
             const response = await fetch('/api/user/update', {
@@ -148,16 +130,11 @@ if (profileForm) {
 
             const data = await response.json();
             if (data.status === 'success') {
-                alert('✅ Profil mis à jour !');
                 loadUserProfile();
             } else {
-                alert('❌ Erreur: ' + data.error);
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('❌ Erreur: ' + error.message);
         }
     });
 }
-
-console.log('✅ Profile.js ready');

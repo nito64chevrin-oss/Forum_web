@@ -1,8 +1,7 @@
-// Vérifier si l'utilisateur est connecté
+
 function checkAuth() {
     const user = localStorage.getItem('user');
     if (!user) {
-        alert('❌ Vous devez être connecté pour créer un post !');
         window.location.href = '/auth.html';
         return null;
     }
@@ -11,7 +10,6 @@ function checkAuth() {
 
 const currentUser = checkAuth();
 
-// Compteur de caractères
 const contentTextarea = document.getElementById('content');
 const charCount = document.getElementById('charCount');
 
@@ -68,17 +66,13 @@ tagCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('change', updateTagCount);
 });
 
-// Soumission du formulaire
 const createPostForm = document.getElementById('createPostForm');
 
 if (createPostForm) {
     createPostForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        console.log('📝 Soumission du formulaire...');
-        
         if (!currentUser) {
-            alert('❌ Vous devez être connecté !');
             return;
         }
         
@@ -96,22 +90,18 @@ if (createPostForm) {
         
         // Validation
         if (!title || !content) {
-            alert('❌ Veuillez remplir tous les champs obligatoires !');
             return;
         }
         
         if (selectedCategories.length === 0) {
-            alert('❌ Veuillez sélectionner au moins une catégorie !');
             return;
         }
         
         if (title.length < 5) {
-            alert('❌ Le titre doit contenir au moins 5 caractères !');
             return;
         }
         
         if (content.length < 20) {
-            alert('❌ Le contenu doit contenir au moins 20 caractères !');
             return;
         }
         
@@ -168,16 +158,10 @@ function createPost(title, content, categoryID, categoryIDs, tags, imageBase64) 
         console.log('Réponse reçue:', data);
         
         if (data.status === 'success') {
-            console.log('✅ Post créé avec succès !');
-            alert('✅ Votre post a été publié avec succès !');
             window.location.href = '/';
         } else {
-            console.error('❌ Erreur:', data.error);
-            alert('❌ Erreur : ' + data.error);
         }
     })
     .catch(error => {
-        console.error('❌ Erreur réseau:', error);
-        alert('❌ Erreur de connexion au serveur');
     });
 }

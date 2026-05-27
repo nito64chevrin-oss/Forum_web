@@ -69,14 +69,8 @@ function updateThemeIcon(theme) {
 const tabs = document.querySelectorAll('.tab');
 tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-        // Remove active class from all tabs
         tabs.forEach(t => t.classList.remove('active'));
-        // Add active class to clicked tab
         tab.classList.add('active');
-        
-        // Here you would load different content based on tab
-        // For now, just visual feedback
-        console.log('Tab clicked:', tab.textContent);
     });
 });
 
@@ -92,9 +86,6 @@ if (categoriesToggle) {
         } else {
             arrow.style.transform = 'rotate(90deg)';
         }
-        
-        // Here you would show/hide categories sidebar
-        console.log('Categories toggle clicked');
     });
 }
 
@@ -108,8 +99,6 @@ categoryItems.forEach(item => {
         }
         
         const category = item.getAttribute('data-category');
-        console.log('Category clicked:', category);
-        // Here you would navigate to category page
     });
 });
 
@@ -119,8 +108,6 @@ topicLinks.forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log('Topic clicked:', link.querySelector('.topic-title').textContent);
-        // Here you would navigate to topic page
     });
 });
 
@@ -129,8 +116,6 @@ const tags = document.querySelectorAll('.tag');
 tags.forEach(tag => {
     tag.addEventListener('click', (e) => {
         e.stopPropagation();
-        console.log('Tag clicked:', tag.textContent);
-        // Here you would filter by tag
     });
 });
 
@@ -165,7 +150,6 @@ document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
         document.querySelector('.btn-search')?.click();
-        console.log('Search shortcut activated');
     }
     
     // Ctrl/Cmd + D for dark mode toggle
@@ -179,8 +163,6 @@ document.addEventListener('keydown', (e) => {
 const menuBtn = document.querySelector('.btn-menu');
 if (menuBtn) {
     menuBtn.addEventListener('click', () => {
-        console.log('Mobile menu toggled');
-        // Here you would show/hide mobile menu
     });
 }
 
@@ -212,12 +194,6 @@ document.querySelectorAll('.category-item').forEach(item => {
     observer.observe(item);
 });
 
-// Console easter egg
-console.log('%c⭐ ARAKI FORUM ⭐', 'color: #FF6B35; font-size: 20px; font-weight: bold;');
-console.log('%cBienvenue sur le forum dédié à Hirohiko Araki !', 'color: #5BA8B8; font-size: 14px;');
-console.log('%cRaccourcis clavier:', 'color: #4A5A9E; font-weight: bold;');
-console.log('%c  • Ctrl/Cmd + K : Recherche', 'color: #999;');
-console.log('%c  • Ctrl/Cmd + D : Toggle Dark/Light mode', 'color: #999;');
 
 // Bouton déconnexion
 const logoutBtn = document.getElementById('logoutBtn');
@@ -250,13 +226,6 @@ function loadUserInNavbar() {
                 const avatarImg = document.getElementById('userAvatar');
                 const usernameElement = document.getElementById('userName');
                 const userProfileDiv = document.getElementById('userProfile');
-                
-                console.log('🔍 Elements trouvés:', {
-                    loginBtn: loginBtn,
-                    avatarImg: avatarImg,
-                    usernameElement: usernameElement,
-                    userProfileDiv: userProfileDiv
-                });
                 
                 if (avatarImg && usernameElement && userProfileDiv) {
                     let avatarSrc = 'static/images/default-avatar.png';
