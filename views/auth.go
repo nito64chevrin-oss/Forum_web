@@ -3,12 +3,15 @@ package views
 import (
 	"database/sql"
 	"encoding/json"
-	"log"
 	"net/http"
 
 	uuid "github.com/satori/go.uuid"
 	"golang.org/x/crypto/bcrypt"
 )
+
+// ========================================
+// STRUCTURES
+// ========================================
 
 type RegisterRequest struct {
 	Username         string   `json:"username"`
@@ -24,6 +27,10 @@ type LoginRequest struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
+
+// ========================================
+// HANDLER : INSCRIPTION
+// ========================================
 
 func RegisterHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -48,13 +55,14 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			})
 			return
 		}
+
+		// Générer un UUID pour l'utilisateur
 		userID := uuid.NewV4().String()
 
-		interestsJSON, _ := json.Marshal(req.Interests)
-
+		// Insérer dans la base de données
 		query := `
-			INSERT INTO users (id, username, email, password, favorite_jojo_part, favorite_stand, interests, created_at)
-			VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+			INSERT INTO users (id, username, email, password, favorite_jojo_part, favorite_stand, created_at)
+			VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
 		`
 
 		_, err = db.Exec(query,
@@ -64,7 +72,6 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			string(hashedPassword),
 			req.FavoriteJojoPart,
 			req.FavoriteStand,
-			string(interestsJSON),
 		)
 
 		if err != nil {
@@ -75,6 +82,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			return
 		}
 
+		// Créer un cookie de session
 		sessionID := uuid.NewV4().String()
 		http.SetCookie(w, &http.Cookie{
 			Name:   "session",
@@ -83,6 +91,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			Path:   "/",
 		})
 
+		// Réponse succès
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"status": "success",
 			"user": map[string]string{
@@ -94,15 +103,17 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 	}
 }
 
+// ========================================
+// HANDLER : CONNEXION
+// ========================================
+
 func LoginHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 
-		log.Println("🔵 LoginHandler appelé") // ✅ LOG 1
-
+		// Décoder les données JSON
 		var req LoginRequest
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-			log.Println("❌ Erreur décodage JSON:", err) // ✅ LOG 2
 			w.WriteHeader(http.StatusBadRequest)
 			json.NewEncoder(w).Encode(map[string]string{
 				"error": "Données invalides",
@@ -110,16 +121,13 @@ func LoginHandler(db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		log.Println("📧 Email reçu:", req.Email)       // ✅ LOG 3
-		log.Println("🔑 Password reçu:", req.Password) // ✅ LOG 4
-
+		// Récupérer l'utilisateur depuis la base de données
 		var userID, username, hashedPassword string
 		query := "SELECT id, username, password FROM users WHERE email = ?"
 
 		err := db.QueryRow(query, req.Email).Scan(&userID, &username, &hashedPassword)
 
 		if err != nil {
-			log.Println("❌ User non trouvé:", err) // ✅ LOG 5
 			w.WriteHeader(http.StatusUnauthorized)
 			json.NewEncoder(w).Encode(map[string]string{
 				"error": "Email ou mot de passe incorrect",
@@ -127,19 +135,14 @@ func LoginHandler(db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		log.Println("✅ User trouvé:", username)                    // ✅ LOG 6
-		log.Println("🔐 Hash de la DB:", hashedPassword[:20]+"...") // ✅ LOG 7
-
+		// Vérifier le mot de passe avec Bcrypt
 		err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(req.Password))
 		if err != nil {
-			log.Println("❌ Mot de passe FAUX pour:", req.Email)
 			w.WriteHeader(http.StatusUnauthorized)
 			json.NewEncoder(w).Encode(map[string]string{
 				"error": "Email ou mot de passe incorrect",
 			})
 			return
-		} else {
-			log.Println("✅ Mot de passe CORRECT pour:", req.Email)
 		}
 
 		// Créer un cookie de session
@@ -163,37 +166,48 @@ func LoginHandler(db *sql.DB) http.HandlerFunc {
 	}
 }
 
+// ========================================
+// HANDLER : RÉCUPÉRER LE PROFIL UTILISATEUR
+// ========================================
+
 func GetUserProfileHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 
-		// Récupérer l'email depuis les paramètres de requête
+		// Récupérer l'email depuis l'URL (/api/user?email=...)
 		email := r.URL.Query().Get("email")
 
 		if email == "" {
 			w.WriteHeader(http.StatusBadRequest)
 			json.NewEncoder(w).Encode(map[string]string{
-				"error": "Email requis",
+				"error": "Email manquant",
 			})
 			return
 		}
 
-		// Requête pour récupérer l'utilisateur
+		// Structure pour stocker les données utilisateur
 		var user struct {
-			ID        string `json:"id"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			AvatarURL string `json:"avatar_url"`
-			Bio       string `json:"bio"`
-			CreatedAt string `json:"created_at"`
+			ID               string `json:"id"`
+			Username         string `json:"username"`
+			Email            string `json:"email"`
+			FavoriteJojoPart string `json:"favorite_jojo_part"`
+			FavoriteStand    string `json:"favorite_stand"`
+			Bio              string `json:"bio"`
+			Location         string `json:"location"`
+			AvatarURL        string `json:"avatar_url"`
+			CreatedAt        string `json:"created_at"`
 		}
 
+		// Requête SQL pour récupérer le profil
 		query := `
 			SELECT id, username, email, 
-			       COALESCE(avatar_url, 'static/images/default-avatar.png') as avatar_url,
+			       COALESCE(favorite_jojo_part, '') as favorite_jojo_part,
+			       COALESCE(favorite_stand, '') as favorite_stand,
 			       COALESCE(bio, '') as bio,
+			       COALESCE(location, '') as location,
+			       COALESCE(avatar_url, '') as avatar_url,
 			       created_at
-			FROM users
+			FROM users 
 			WHERE email = ?
 		`
 
@@ -201,13 +215,15 @@ func GetUserProfileHandler(db *sql.DB) http.HandlerFunc {
 			&user.ID,
 			&user.Username,
 			&user.Email,
-			&user.AvatarURL,
+			&user.FavoriteJojoPart,
+			&user.FavoriteStand,
 			&user.Bio,
+			&user.Location,
+			&user.AvatarURL,
 			&user.CreatedAt,
 		)
 
 		if err != nil {
-			log.Println("❌ Utilisateur non trouvé:", err)
 			w.WriteHeader(http.StatusNotFound)
 			json.NewEncoder(w).Encode(map[string]string{
 				"error": "Utilisateur non trouvé",
@@ -215,51 +231,38 @@ func GetUserProfileHandler(db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		// Compter le nombre de posts
-		var postsCount int
-		db.QueryRow("SELECT COUNT(*) FROM posts WHERE user_id = ?", user.ID).Scan(&postsCount)
+		// Calculer les stats
+		var stats struct {
+			PostsCount    int `json:"posts_count"`
+			CommentsCount int `json:"comments_count"`
+			LikesReceived int `json:"likes_received"`
+		}
 
-		// Compter le nombre de commentaires
-		var commentsCount int
-		db.QueryRow("SELECT COUNT(*) FROM comments WHERE user_id = ?", user.ID).Scan(&commentsCount)
+		// Compter les posts
+		db.QueryRow(`SELECT COUNT(*) FROM posts WHERE user_id = ?`, user.ID).Scan(&stats.PostsCount)
 
-		// Compter le nombre de likes reçus sur les posts
-		var likesReceivedOnPosts int
+		// Compter les commentaires
+		db.QueryRow(`SELECT COUNT(*) FROM comments WHERE user_id = ?`, user.ID).Scan(&stats.CommentsCount)
+
+		// Compter les likes reçus (sur les posts + sur les commentaires)
 		db.QueryRow(`
-			SELECT COUNT(*) 
-			FROM reactions r
-			INNER JOIN posts p ON r.post_id = p.id
+			SELECT COUNT(*) FROM reactions r
+			JOIN posts p ON r.post_id = p.id
 			WHERE p.user_id = ? AND r.reaction_type = 'like'
-		`, user.ID).Scan(&likesReceivedOnPosts)
+		`, user.ID).Scan(&stats.LikesReceived)
 
-		// Compter le nombre de likes reçus sur les commentaires
-		var likesReceivedOnComments int
-		db.QueryRow(`
-			SELECT COUNT(*)
-			FROM reactions r
-			INNER JOIN comments c ON r.comment_id = c.id
-			WHERE c.user_id = ? AND r.reaction_type = 'like'
-		`, user.ID).Scan(&likesReceivedOnComments)
-
-		// Total des likes reçus
-		totalLikesReceived := likesReceivedOnPosts + likesReceivedOnComments
-
-		log.Println("✅ Profil récupéré:", user.Username, "- Posts:", postsCount, "- Commentaires:", commentsCount, "- Likes:", totalLikesReceived)
-
-		// Réponse avec stats
+		// Renvoyer les données en JSON
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"status": "success",
 			"user":   user,
-			"stats": map[string]int{
-				"posts_count":       postsCount,
-				"comments_count":    commentsCount,
-				"likes_received":    totalLikesReceived,
-				"likes_on_posts":    likesReceivedOnPosts,
-				"likes_on_comments": likesReceivedOnComments,
-			},
+			"stats":  stats,
 		})
 	}
 }
+
+// ========================================
+// HANDLER : METTRE À JOUR LE PROFIL
+// ========================================
 
 func UpdateUserProfileHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -268,11 +271,13 @@ func UpdateUserProfileHandler(db *sql.DB) http.HandlerFunc {
 		// Décoder les données JSON
 		var req struct {
 			Email            string `json:"email"`
+			Username         string `json:"username"`
 			Bio              string `json:"bio"`
 			Location         string `json:"location"`
-			FavoriteJojoPart string `json:"favorite_jojo_part"`
-			FavoriteStand    string `json:"favorite_stand"`
 			AvatarURL        string `json:"avatar_url"`
+			FavoriteStand    string `json:"favorite_stand"`
+			FavoriteJojoPart string `json:"favorite_jojo_part"`
+			Interests        string `json:"interests"`
 		}
 
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -283,33 +288,115 @@ func UpdateUserProfileHandler(db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		// Mettre à jour dans SQL
+		// Vérifier que l'email existe
+		if req.Email == "" {
+			w.WriteHeader(http.StatusBadRequest)
+			json.NewEncoder(w).Encode(map[string]string{
+				"error": "Email requis",
+			})
+			return
+		}
+
+		// Construire la requête UPDATE
 		query := `
 			UPDATE users 
-			SET bio = ?, location = ?, favorite_jojo_part = ?, favorite_stand = ?, avatar_url = ?
+			SET 
+				username = COALESCE(?, username),
+				bio = COALESCE(?, bio),
+				location = COALESCE(?, location),
+				avatar_url = COALESCE(?, avatar_url),
+				favorite_stand = COALESCE(?, favorite_stand),
+				favorite_jojo_part = COALESCE(?, favorite_jojo_part),
+				interests = COALESCE(?, interests)
 			WHERE email = ?
 		`
 
-		_, err := db.Exec(query,
-			req.Bio,
-			req.Location,
-			req.FavoriteJojoPart,
-			req.FavoriteStand,
-			req.AvatarURL,
+		result, err := db.Exec(query,
+			nullIfEmpty(req.Username),
+			nullIfEmpty(req.Bio),
+			nullIfEmpty(req.Location),
+			nullIfEmpty(req.AvatarURL),
+			nullIfEmpty(req.FavoriteStand),
+			nullIfEmpty(req.FavoriteJojoPart),
+			nullIfEmpty(req.Interests),
 			req.Email,
 		)
 
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			json.NewEncoder(w).Encode(map[string]string{
-				"error": "Erreur lors de la mise à jour",
+				"error": "Erreur serveur",
 			})
 			return
 		}
 
-		// Réponse succès
+		// Vérifier que la mise à jour a eu lieu
+		rowsAffected, err := result.RowsAffected()
+		if err != nil || rowsAffected == 0 {
+			w.WriteHeader(http.StatusNotFound)
+			json.NewEncoder(w).Encode(map[string]string{
+				"error": "Utilisateur non trouvé",
+			})
+			return
+		}
+
+		// Récupérer les données mises à jour
+		var user struct {
+			ID               string `json:"id"`
+			Username         string `json:"username"`
+			Email            string `json:"email"`
+			FavoriteJojoPart string `json:"favorite_jojo_part"`
+			FavoriteStand    string `json:"favorite_stand"`
+			Bio              string `json:"bio"`
+			Location         string `json:"location"`
+			AvatarURL        string `json:"avatar_url"`
+			CreatedAt        string `json:"created_at"`
+		}
+
+		getQuery := `
+			SELECT id, username, email, 
+			       COALESCE(favorite_jojo_part, '') as favorite_jojo_part,
+			       COALESCE(favorite_stand, '') as favorite_stand,
+			       COALESCE(bio, '') as bio,
+			       COALESCE(location, '') as location,
+			       COALESCE(avatar_url, '') as avatar_url,
+			       created_at
+			FROM users 
+			WHERE email = ?
+		`
+
+		err = db.QueryRow(getQuery, req.Email).Scan(
+			&user.ID,
+			&user.Username,
+			&user.Email,
+			&user.FavoriteJojoPart,
+			&user.FavoriteStand,
+			&user.Bio,
+			&user.Location,
+			&user.AvatarURL,
+			&user.CreatedAt,
+		)
+
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			json.NewEncoder(w).Encode(map[string]string{
+				"error": "Erreur serveur",
+			})
+			return
+		}
+
+		// Renvoyer les données mises à jour
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"status": "success",
+			"user":   user,
 		})
 	}
+}
+
+// Fonction helper pour retourner NULL si vide
+func nullIfEmpty(s string) interface{} {
+	if s == "" {
+		return nil
+	}
+	return s
 }
